@@ -1,37 +1,40 @@
 {
     "manifest_version": 3,
-    "name": "Linkedin Premium",
-    "description": "The Swiss Army Knife for Linkedin.",
+    "name": "Linkedin Enhanced",
+    "description": "The Swiss Army Knife for Linkedin. Own your time.",
     "version": "1.0",
-    "icons": {
-        "16": "images/icon-16.png",
-        "32": "images/icon-32.png",
-        "48": "images/icon-48.png",
-        "128": "images/icon-128.png"
+    "background": {
+      "service_worker": "service-worker.js"
     },
     "action": {
-        "default_icon": {
-            "16": "images/icon-16.png",
-            "32": "images/icon-32.png",
-            "48": "images/icon-48.png",
-            "128": "images/icon-128.png"
-        }
+      "default_title": "Click to open panel"
     },
-    "permissions": [
-        "scripting",
-        "activeTab"
-    ],
-    "content_scripts": [
-        {
-            "matches": [
-                "https://www.linkedin.com/feed/"
-            ],
-            "css": [
-                "styles/my-styles.css"
-            ],
-            "js": [
-                "scripts/content.js"
-            ]
+    "permissions": ["sidePanel", "tabs", "scripting", "activeTab"],
+    "commands": {
+      "_execute_action": {
+        "suggested_key": {
+          "default": "Ctrl+B",
+          "mac": "Command+B"
         }
-    ]
-}
+      }
+    },
+    "icons": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "content_scripts": [
+      {
+          "matches": [
+              "https://www.linkedin.com/feed/"
+          ],
+          "css": [
+              "styles/my-styles.css"
+          ],
+          "js": [
+              "scripts/content.js"
+          ]
+      }
+  ]
+  }
