@@ -22,3 +22,9 @@ chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
     });
   }
 });
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message === 'hello-friend') {
+    sendResponse("hello-friend-message-recived");
+  }
+});

@@ -17,3 +17,7 @@ const feed = document.querySelector('[aria-label="Main Feed"]');
 console.log("feed")
 console.log(feed)
 // eed-shared-update-v2__control-menu-container -> every post has this class.
+
+chrome.runtime.sendMessage('hello-friend', (response) => {
+    console.log('received user data', response);
+});
