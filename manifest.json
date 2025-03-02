@@ -4,12 +4,14 @@
     "description": "The Swiss Army Knife for Linkedin. Own your time.",
     "version": "1.0",
     "background": {
-      "service_worker": "service-worker.js"
+      "service_worker": "service-worker.js",
+      "matches":   [ "<all_urls>"]
     },
     "action": {
       "default_title": "Click to open panel"
     },
-    "permissions": ["sidePanel", "tabs", "scripting", "activeTab"],
+    "permissions": ["sidePanel", "tabs", "scripting", "activeTab", "webRequest"],
+    "host_permissions": ["https://www.linkedin.com/voyager/api/graphql*"],
     "commands": {
       "_execute_action": {
         "suggested_key": {

@@ -1,4 +1,4 @@
-const LINKEDIN_ORIGIN = "https://www.linkedin.com";
+const ORIGIN = "https://www.linkedin.com";
 
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
@@ -7,8 +7,8 @@ chrome.sidePanel
 chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
   if (!tab.url) return;
   const url = new URL(tab.url);
-  // Enables the side panel on linkedin.com
-  if (url.origin === LINKEDIN_ORIGIN) {
+  // Enables the side panel on ORIGIN
+  if (url.origin === ORIGIN) {
     await chrome.sidePanel.setOptions({
       tabId,
       path: 'sidepanel.html',
@@ -28,3 +28,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse("hello-friend-message-recived");
   }
 });
+
+chrome.webRequest.onBeforeRequest.addListener(
+  function (details) {
+    if (details.method === 'GET') {
+      console.log("details object", details);
+      // Get the active tab and send a message to its content script
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs.length > 0) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            message: "get_api_call_detected",
+            url: details.url
+          });
+        }
+      });
+    }
+
+  },
+  { urls: ["https://www.linkedin.com/voyager/api/graphql*"] }, // Target API
+  ["requestBody"]
+);
